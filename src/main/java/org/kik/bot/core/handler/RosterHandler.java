@@ -68,7 +68,7 @@ public class RosterHandler {
                 LOG.debug("[System] Registered/Updated GroupChat[" + groupJid + "]");
                 //todo: implement update groupChat: would probably need to update the membership of the groupChat that's in the chat interaction map rather that overwriting it every time.
                 // would need to add/remove chatGroupMembers based on the what's in the node and what's in the current chatGroup in the chatInteractionMap
-            } else if("remove-group".equalsIgnoreCase(nodeName)) {
+            } else if("remove-group".equalsIgnoreCase(nodeName) || "remove".equalsIgnoreCase(nodeName)) {
                 //todo: implement remove chat interaction: remove entry from chatInteractionMap based on jid
             } else {
                 LOG.warn("[System] Unknown Roster request data: " + rosterListWrapper.toString());
