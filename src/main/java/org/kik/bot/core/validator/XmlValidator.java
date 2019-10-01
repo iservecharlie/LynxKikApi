@@ -12,6 +12,7 @@ import java.io.UnsupportedEncodingException;
 
 public class XmlValidator {
     private static final Logger LOGGER = Logger.getLogger(XmlValidator.class);
+    private static final String EXCEPTION_SEEN_FOR = "Exception seen for ";
     private String partialData;
 
     public String getAsCompleteValidXml(String data) {
@@ -61,11 +62,11 @@ public class XmlValidator {
             dBuilder.parse(input);
             validXml = true;
         } catch (UnsupportedEncodingException | ParserConfigurationException e) {
-            LOGGER.error("Exception seen for " + data, e);
+            LOGGER.error(EXCEPTION_SEEN_FOR + data, e);
         } catch (SAXException e) {
-            LOGGER.error("SAXException seen for " + data, e);
+            LOGGER.error(EXCEPTION_SEEN_FOR + data, e);
         } catch (IOException e) {
-            LOGGER.error("IOException seen for " + data, e);
+            LOGGER.error(EXCEPTION_SEEN_FOR + data, e);
         }
         return validXml;
     }
