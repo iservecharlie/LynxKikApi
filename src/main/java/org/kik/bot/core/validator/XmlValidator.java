@@ -1,5 +1,6 @@
 package org.kik.bot.core.validator;
 
+import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -10,6 +11,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 public class XmlValidator {
+    private static final Logger LOGGER = Logger.getLogger(XmlValidator.class);
+    private static final String EXCEPTION_SEEN_FOR = "Exception seen for ";
     private String partialData;
 
     public String getAsCompleteValidXml(String data) {
@@ -59,12 +62,11 @@ public class XmlValidator {
             dBuilder.parse(input);
             validXml = true;
         } catch (UnsupportedEncodingException | ParserConfigurationException e) {
-            e.printStackTrace();
+            LOGGER.error(EXCEPTION_SEEN_FOR + data, e);
         } catch (SAXException e) {
-            e.printStackTrace();
-            System.out.println(data);
+            LOGGER.error(EXCEPTION_SEEN_FOR + data, e);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error(EXCEPTION_SEEN_FOR + data, e);
         }
         return validXml;
     }
