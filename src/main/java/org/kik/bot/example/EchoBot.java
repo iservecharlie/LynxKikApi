@@ -7,18 +7,19 @@ import org.kik.bot.core.handler.DetailedRosterMessageHandler;
 import org.kik.bot.core.handler.MessageHandler;
 import org.kik.bot.core.handler.RosterHandler;
 import org.kik.bot.core.translator.JidTranslator;
+import org.kik.bot.example.behaviour.Echo;
 import org.kik.bot.example.behaviour.Listen;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
-public class ListenerBot {
-    private static final Logger LOGGER = Logger.getLogger(ListenerBot.class);
+public class EchoBot {
+    private static final Logger LOGGER = Logger.getLogger(EchoBot.class);
 
     private final String username;
     private final String password;
 
-    public ListenerBot(String username, String password) {
+    public EchoBot(String username, String password) {
         this.username = username;
         this.password = password;
     }
@@ -32,6 +33,7 @@ public class ListenerBot {
         MessageHandler messageHandler = new DetailedRosterMessageHandler(jidTranslator);
 
         messageHandler.addBotBehaviour(new Listen());
+        messageHandler.addBotBehaviour(new Echo(kikClient));
         DataHandler dataHandler = new DataHandler(rosterHandler, messageHandler);
         kikClient.setOnDataReceived(dataHandler::handleData);
 

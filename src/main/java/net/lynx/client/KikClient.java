@@ -158,7 +158,6 @@ public class KikClient {
                 .addEmptyNode("ri");
         message.addChild(kik);
         message.addChild(request);
-        System.out.println(message);
         write_to_kik_server(message);
     }
 
