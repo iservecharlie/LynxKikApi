@@ -14,4 +14,11 @@ public class IqType {
     public static final String XMLNS = "xmlns"; // attribute name that determines the type of request/response for all chat interactions or details of a group chat member
     public static final String XMLNS_ROSTER_REQUEST = "jabber:iq:roster"; // xmlns value for all chat interaction request/response
     public static final String XMLNS_MEMBER_DETAIL_REQUEST = "kik:iq:friend:batch"; // xmlns value for a group member request/response
+
+    public static final String ROSTER_REQUEST_PERSON_CHAT_NODE_NAME = "item"; // xmlns value for a group member request/response
+    public static final String ROSTER_REQUEST_GROUP_CHAT_NODE_NAME = "g"; // xmlns value for a group member request/response
+
+
+    public static final String MEMBER_DETAIL_REQUEST_RESULT_WRAPPER = "success"; // xmlns value for a group member request/response
+    public static final String MEMBER_DETAIL_REQUEST_NODE_NAME= "item"; // xmlns value for a group member request/response
 }

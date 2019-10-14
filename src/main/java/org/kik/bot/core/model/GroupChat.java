@@ -59,6 +59,10 @@ public class GroupChat extends Chat {
         return members.get(jid);
     }
 
+    public void addMember(GroupChatMember groupChatMember) {
+        members.put(groupChatMember.getJid(), groupChatMember);
+    }
+
     public void updateMemberDetails(String memberJid, Node item) {
         GroupChatMember member = members.get(memberJid);
         if(member == null) {
@@ -69,6 +73,10 @@ public class GroupChat extends Chat {
         LOG.debug("[System] Member[" + memberJid + "] of ChatGroup[" + getJid() + "] set displayName to: " + displayName);
         member.setDisplayName(displayName);
         members.put(memberJid, member);
+    }
+
+    public void removeMember(String memberJid) {
+        members.remove(memberJid);
     }
 
     @Override
@@ -84,5 +92,6 @@ public class GroupChat extends Chat {
                 ", members=" + members +
                 '}';
     }
+
 }
 
