@@ -38,7 +38,13 @@ public class DataHandler {
             Node node = stringToNodeParser.stringToNode(completeData);
             String nodeName = node.getName();
             if (MESSAGE.equalsIgnoreCase(nodeName)) {
-                getMessageHandler().handle(node);
+                Node[] status = node.getChildrensByName("status");
+                Node[] g = node.getChildrensByName("g");
+                if(status.length > 0 && g.length > 0) {
+                    handleGroupChatMembershipUpdate(node, status[0], g[0]);
+                } else {
+                    getMessageHandler().handle(node);
+                }
             } else if(IQ.equalsIgnoreCase(nodeName)) {
                 getRosterHandler().handle(node);
             } else if("ack".equalsIgnoreCase(nodeName)) {
@@ -53,13 +59,26 @@ public class DataHandler {
         }
     }
 
+    private void handleGroupChatMembershipUpdate(Node node, Node status, Node g) {
+        Node[] l = g.getChildrensByName("l");
+        String groupJid = node.getAttribute("from");
+        String memberJid = status.getAttribute("jid");
+        if(l.length == 0) {
+            LOG.info(String.format("[System] Updating membership of Group[%s] to include GroupMember[%s]", groupJid, memberJid));
+            rosterHandler.addToMemberGroupMap(memberJid, groupJid);
+        } else {
+            LOG.info(String.format("[System] Updating membership of Group[%s] to remove GroupMember[%s]", groupJid, memberJid));
+            rosterHandler.removeMemberInGroupMap(memberJid, groupJid);
+        }
+    }
+
     private RosterHandler getRosterHandler() {
         return rosterHandler;
     }
 
     private MessageHandler getMessageHandler() {
         return messageHandler;
-    };
+    }
 
     private static class StringToNodeParser {
         private Node stringToNode(String data) throws XmlPullParserException, IOException {
